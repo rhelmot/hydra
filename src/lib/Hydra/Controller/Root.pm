@@ -330,7 +330,7 @@ sub nar :Local :Args(1) {
     else {
         $path = $Nix::Config::storeDir . "/$path";
 
-        gone($c, "Path " . $path . " is no longer available.") unless $MACHINE_LOCAL_STORE->isValidPath($path);
+        gone($c, "Path " . $path . " is no longer available.") unless machineLocalStore()->isValidPath($path);
 
         $c->stash->{current_view} = 'NixNAR';
         $c->stash->{storePath} = $path;
@@ -368,7 +368,7 @@ sub realisations :Path('realisations') :Args(StrMatch[REALISATIONS_REGEX]) {
 
     else {
         my ($rawDrvOutput) = $realisation =~ REALISATIONS_REGEX;
-        my $rawRealisation = $MACHINE_LOCAL_STORE->queryRawRealisation($rawDrvOutput);
+        my $rawRealisation = machineLocalStore()->queryRawRealisation($rawDrvOutput);
 
         if (!$rawRealisation) {
             $c->response->status(404);
