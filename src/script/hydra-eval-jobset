@@ -384,6 +384,10 @@ sub evalJobs {
         print STDERR "evaluator: @escaped\n";
     }
 
+    if (defined $ENV{'HYDRA_EVAL_JOBS_EXTRA_ARGS'}) {
+        push @cmd, split(" ", $ENV{'HYDRA_EVAL_JOBS_EXTRA_ARGS'});
+    }
+
     (my $res, my $jobsJSON, my $stderr) = captureStdoutStderr(21600, @cmd);
     die "hydra-eval-jobs returned " . ($res & 127 ? "signal $res" : "exit code " . ($res >> 8))
         . ":\n" . ($stderr ? decode("utf-8", $stderr) : "(no output)\n")
