@@ -19,6 +19,7 @@ void State::makeRunnable(Step::ptr step)
         assert(!step->finished);
         assert(step_->deps.empty());
         step_->runnableSince = std::chrono::system_clock::now();
+        step_->lastSupported = std::chrono::system_clock::now();
     }
 
     {
